@@ -1,14 +1,11 @@
 (ns front.web.view.roots
   (:require [rum.core :as rum]))
 
-(rum/defc label [text]
-  [:div {:class "label"} text])
-
-(rum/defc index [{:keys [github-signin-url]}]
+(rum/defc index [{:keys [github-authorization-url]}]
   [:html
    [:head]
    [:body
     [:h1 "Roots#index"]
     [:p
-     [:a {:href github-signin-url} "Sign in with GitHub"]
-     [:input {:type "text" :value "hoge-"}]]]])
+     [:a {:href github-authorization-url}
+      "Sign in with GitHub"]]]])

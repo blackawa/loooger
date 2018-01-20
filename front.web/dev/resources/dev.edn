@@ -2,4 +2,6 @@
  :duct.core/include ["front/web/config"]
 
  :duct.module/sql
- {:database-url "jdbc:postgresql://localhost:5456/postgres?user=front.web&password=p@ssw0rd"}}
+ {:database-url "jdbc:postgresql://localhost:5456/postgres?user=front.web&password=p@ssw0rd"}
+
+ :front.web.component/secrets {:host "http://localhost:3000"}}
