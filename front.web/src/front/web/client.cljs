@@ -1,3 +1,3 @@
 (ns front.web.client)
 
-(js/console.log "FIXME")
+(js/console.log "Connected")
