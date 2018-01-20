@@ -10,7 +10,9 @@
                  [duct/module.cljs "0.3.2"]
                  [duct/module.sql "0.4.2"]
                  [org.postgresql/postgresql "42.1.4"]
-                 [rum "0.10.8"]]
+                 [rum "0.10.8"]
+                 ;; [org.pac4j/pac4j-oauth "2.2.1"]
+                 ]
   :plugins [[duct/lein-duct "0.10.6"]]
   :main ^:skip-aot front.web.main
   :resource-paths ["resources" "target/resources"]

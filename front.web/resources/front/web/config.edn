@@ -7,4 +7,9 @@
  :duct.module/cljs {:main front.web.client}
 
  :duct.module/ataraxy
- {}}
+ {[:get "/"] [:roots/index]}
+
+ :front.web.component/secrets {:github {:id #duct/env ["GITHUB_ID"]
+                                        :secret #duct/env ["GITHUB_SECRET"]}}
+
+ :front.web.handler.roots/index {:secrets #ig/ref :front.web.component/secrets}}
