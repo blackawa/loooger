@@ -14,7 +14,9 @@
           {:value :fatal :label "FATAL"}])]
    [:input {:type "text"
             :name "body"
-            :placeholder "log here"}]])
+            :placeholder "log here"
+            :on-change (fn [e] #?(:clj (println e) :cljs (.log js/console e)))}]
+   [:button {:type "submit"} "send"]])
 
 (rum/defc recent-logs []
   ;; TODO: fetch logs

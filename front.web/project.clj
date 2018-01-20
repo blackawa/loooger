@@ -13,6 +13,7 @@
                  [rum "0.10.8"]
                  ;; [org.pac4j/pac4j-oauth "2.2.1"]
                  [clj-http "3.7.0"]
+                 [cljs-http "0.1.44"]
                  [honeysql "0.9.1"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-time "0.14.2"]
