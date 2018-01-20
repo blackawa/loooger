@@ -7,7 +7,7 @@
 (defprotocol GithubClient
   (fetch-authorization-url [github options])
   (fetch-access-token [github options])
-  (fetch-account-name [github options]))
+  (fetch-account [github options]))
 
 (extend-protocol GithubClient
   front.web.component.github.Boundary
@@ -20,11 +20,13 @@
        (url-encode "read:user")
        (url-encode (str (java.util.UUID/randomUUID))))))
   (fetch-access-token [{:keys [client-id secret]} {:keys [code state]}]
-    (let [response-body
-          (:body (http/post "https://github.com/login/oauth/access_token"
-                            {:form-params {:client_id client-id :client_secret secret
-                                           :code code :state state}
-                             :accept "application/json"}))]
-      (->> (get (json/read-str response-body) "access_token"))))
-  (fetch-account-name [github {:keys [access-token]}]
-    "fuga"))
+    (-> (http/post "https://github.com/login/oauth/access_token"
+                   {:form-params {:client_id client-id :client_secret secret
+                                  :code code :state state}
+                    :accept "application/json"})
+        :body json/read-str (get "access_token")))
+  (fetch-account [github {:keys [access-token]}]
+    (-> (http/get "https://api.github.com/user"
+                  {:headers {"Authorization" (str "Bearer " access-token)
+                             "Accept" "application/json"}})
+        :body json/read-str (select-keys ["login" "id"]))))

@@ -25,14 +25,10 @@
  ;; migrations
  :duct.migrator/ragtime
  {:migrations [#ig/ref :front.web.migration/accounts
-               #ig/ref :front.web.migration/access-token-types
-               #ig/ref :front.web.migration/account-access-tokens]}
+               #ig/ref :front.web.migration/account-github-access-tokens]}
  [:duct.migrator.ragtime/sql :front.web.migration/accounts]
  {:up [#duct/resource "front/web/migration/accounts.up.sql"]
   :down [#duct/resource "front/web/migration/accounts.down.sql"]}
- [:duct.migrator.ragtime/sql :front.web.migration/access-token-types]
- {:up [#duct/resource "front/web/migration/access-token-types.up.sql"]
-  :down [#duct/resource "front/web/migration/access-token-types.down.sql"]}
- [:duct.migrator.ragtime/sql :front.web.migration/account-access-tokens]
- {:up [#duct/resource "front/web/migration/account-access-tokens.up.sql"]
-  :down [#duct/resource "front/web/migration/account-access-tokens.down.sql"]}}
+ [:duct.migrator.ragtime/sql :front.web.migration/account-github-access-tokens]
+ {:up [#duct/resource "front/web/migration/account-github-access-tokens.up.sql"]
+  :down [#duct/resource "front/web/migration/account-github-access-tokens.down.sql"]}}

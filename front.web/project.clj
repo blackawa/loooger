@@ -14,7 +14,8 @@
                  ;; [org.pac4j/pac4j-oauth "2.2.1"]
                  [clj-http "3.7.0"]
                  [honeysql "0.9.1"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [org.clojure/data.json "0.2.6"]
+                 [clj-time "0.14.2"]]
   :plugins [[duct/lein-duct "0.10.6"]]
   :main ^:skip-aot front.web.main
   :resource-paths ["resources" "target/resources"]

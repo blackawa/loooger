@@ -1,0 +1,1 @@
+drop table account_github_access_tokens;
