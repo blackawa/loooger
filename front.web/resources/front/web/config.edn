@@ -1,0 +1,10 @@
+{:duct.core/project-ns  front.web
+ :duct.core/environment :production
+
+ :duct.module/logging {}
+ :duct.module.web/site {}
+ :duct.module/sql {}
+ :duct.module/cljs {:main front.web.client}
+
+ :duct.module/ataraxy
+ {}}
