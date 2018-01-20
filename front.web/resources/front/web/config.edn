@@ -5,22 +5,27 @@
  :duct.module.web/site {}
  :duct.module/sql {}
  :duct.module/cljs {:main front.web.client}
-
- ;; custom components
+ :duct.middleware.web/defaults {:session
+                                {:store #ig/ref :front.web.component/session-store}}
  :front.web.component/secrets {:github {:client-id #duct/env ["GITHUB_ID"]
                                         :client-secret #duct/env ["GITHUB_SECRET"]}}
  :front.web.component/github {:secrets #ig/ref :front.web.component/secrets}
+ :front.web.component/session-store {:host #duct/env ["REDIS_HOST"]
+                                     :port #duct/env ["REDIS_PORT"]}
 
  ;; routing
  :duct.module/ataraxy
  {[:get "/"] [:roots/index]
   "/callback"
-  {[:get "/github"] [:callbacks/github]}}
+  {[:get "/github"] [:callbacks/github]}
+  "/accounts"
+  {[:get "/" id] [:accounts/show id]}}
  ;; handlers
  :front.web.handler.roots/index {:secrets #ig/ref :front.web.component/secrets
                                  :github #ig/ref :front.web.component/github}
  :front.web.handler.callbacks/github {:github #ig/ref :front.web.component/github
                                       :db #ig/ref :duct.database/sql}
+ :front.web.handler.accounts/show {:db #ig/ref :duct.database/sql}
 
  ;; migrations
  :duct.migrator/ragtime
