@@ -14,7 +14,6 @@
           (front.web.boundary.github/fetch-account
            github {:access-token access-token})
           signed-up? (account/signed-up-with-github? db github-account-id)
-          _ (println signed-up?)
           account-id (if signed-up?
                        (:id signed-up?)
                        (account/create db {:name name
