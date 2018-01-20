@@ -6,4 +6,4 @@
 
 (defmethod ig/init-key ::index [_ {:keys [secrets]}]
   (fn [req]
-    [::response/ok (rum/render-html (view/label "hello"))]))
+    [::response/ok (rum/render-html (view/index {:github-signin-url "https://github.com"}))]))
