@@ -6,8 +6,7 @@
   [:div
    [:select {:name "level"}
     (map (fn [option] [:option {:value (:value option) :key (:value option)} (:label option)])
-         [{:value nil :label "choose level"}
-          {:value :trace :label "TRACE"}
+         [{:value :trace :label "TRACE"}
           {:value :debug :label "DEBUG"}
           {:value :info :label "INFO"}
           {:value :warn :label "WARN"}

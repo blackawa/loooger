@@ -8,12 +8,6 @@
 
 (defn static-layout [app]
   (str
-   "<!doctype html5>
-    <html>
-    <head></head>
-    <body>
-      <div id=\"app\">"
+   "<!doctype html5><html><head></head><body><div id=\"app\">"
    app
-   "  </div>
-    </body>
-    </html>"))
+   "</div><script src=\"/js/main.js\"></script></body></html>"))
