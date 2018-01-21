@@ -13,6 +13,4 @@
       [::response/see-other "/"]
       (if (not (= (str id) (str (:id session))))
         [::response/not-found (rum/render-html (error-view/not-found))]
-        [::response/ok (static-layout (rum/render-html (view/logs)))
-         ;;(rum/render-html (view/show view/logs))
-         ]))))
+        [::response/ok (static-layout (rum/render-html (view/logs (view/db))))]))))

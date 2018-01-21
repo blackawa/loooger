@@ -4,8 +4,8 @@
 
 (js/console.log "Connected")
 
+(def db (front.web.view.accounts/db))
+
 (if-let [app (.getElementById js/document "app")]
-  (do
-    (.log js/console "mounting...")
-    (rum/mount (logs) app))
-  (.log js/console "cannot find element by id"))
+  (rum/mount (logs db) app)
+  (.error js/console "cannot find element by id"))

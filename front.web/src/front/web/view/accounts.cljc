@@ -2,7 +2,11 @@
   (:require [rum.core :as rum]
             [front.web.view.layout :refer [layout]]))
 
-(rum/defc log-form []
+(defn db
+  ([] (db {}))
+  ([data] (atom data)))
+
+(rum/defc log-form < rum/reactive [db]
   [:div
    [:select {:name "level"}
     (map (fn [option] [:option {:value (:value option) :key (:value option)} (:label option)])
@@ -11,27 +15,21 @@
           {:value :info :label "INFO"}
           {:value :warn :label "WARN"}
           {:value :fatal :label "FATAL"}])]
-   [:input {:type "text"
-            :name "body"
-            :placeholder "log here"
-            :on-change (fn [e] #?(:clj (println e) :cljs (.log js/console "hello")))}]
+   [:textarea {:name "body"
+               :placeholder "log here"
+               :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
+   [:pre#preview (str "preview:" (get-in (rum/react db) [:form :body]))]
    [:button {:type "submit"} "send"]])
 
-(rum/defc recent-logs []
+(rum/defc recent-logs [db]
   ;; TODO: fetch logs
   (let [logs
-        [{:id 3 :level :trace :body "bodi" :created-at "2018-01-20 12:34:56"}
+        [{:id 1 :level :fatal :body "bodibodibodi" :created-at "2018-01-20 12:34:54"}
          {:id 2 :level :info :body "bodibodi" :created-at "2018-01-20 12:34:55"}
-         {:id 1 :level :fatal :body "bodibodibodi" :created-at "2018-01-20 12:34:54"}]]
+         {:id 3 :level :trace :body "bodi" :created-at "2018-01-20 12:34:56"}]]
     [:div [:ul (map (fn [log] [:li {:key (:id log)} (str log)]) logs)]]))
 
-(rum/defc logs []
+(rum/defc logs [db]
   [:div
-   (recent-logs)
-   (log-form)])
-
-(rum/defc show [react-root]
-  (layout
-   [:h1 "Accounts#show"]
-   [:div#app (react-root)]
-   [:script {:src "/js/main.js"}]))
+   (recent-logs db)
+   (log-form db)])
