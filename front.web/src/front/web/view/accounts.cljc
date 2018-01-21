@@ -19,7 +19,8 @@
    [:textarea {:placeholder "log here"
                :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
    [:pre#preview (str "preview: [" (get-in (rum/react db) [:form :level]) "] " (get-in (rum/react db) [:form :body]))]
-   [:button {:type "submit"} "send"]])
+   [:button {:type "submit"
+             :on-click (fn [_] #?(:cljs (.log js/console "clicked")))} "send"]])
 
 (rum/defc recent-logs [db]
   ;; TODO: fetch logs
