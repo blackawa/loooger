@@ -4,10 +4,12 @@
  :duct.module/logging {}
  :duct.module.web/api {}
  :duct.server.http/jetty {:port 3001}
+ :front.api.component/redis {:host #duct/env ["REDIS_HOST"]
+                             :port #duct/env ["REDIS_PORT"]}
 
  ;; routing
  :duct.module/ataraxy
- {"/logs"
-  {[:post ""] [:logs/create]}}
+ {["/accounts/" account-id "/logs"]
+  {[:post ""] [:logs/create account-id]}}
  ;; handlers
- :front.api.handler.logs/create {}}
+ :front.api.handler.logs/create {:redis #ig/ref :front.api.component/redis}}
