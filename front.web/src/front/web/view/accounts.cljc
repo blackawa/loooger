@@ -31,10 +31,8 @@
    (recent-logs)
    (log-form)])
 
-(rum/defc show []
+(rum/defc show [react-root]
   (layout
    [:h1 "Accounts#show"]
-   [:div#app
-    ;; (logs)
-    ]
+   [:div#app (react-root)]
    [:script {:src "/js/main.js"}]))

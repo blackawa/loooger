@@ -5,3 +5,15 @@
    [:head
     [:title "Stream logs out of your mind | loooger"]]
    [:body body]])
+
+(defn static-layout [app]
+  (str
+   "<!doctype html5>
+    <html>
+    <head></head>
+    <body>
+      <div id=\"app\">"
+   app
+   "  </div>
+    </body>
+    </html>"))
