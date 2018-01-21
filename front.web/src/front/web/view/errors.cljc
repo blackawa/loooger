@@ -3,6 +3,7 @@
             [front.web.view.layout :refer [layout]]))
 
 (rum/defc not-found []
-  (layout
-   [:h1 "404 Resource not found"]
-   [:a {:href "/"} "Go to top page and try again."]))
+  (rum/render-html
+   (layout
+    [:h1 "404 Resource not found"]
+    [:a {:href "/"} "Go to top page and try again."])))
