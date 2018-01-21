@@ -8,17 +8,17 @@
 
 (rum/defc log-form < rum/reactive [db]
   [:div
-   [:select {:name "level"}
+   [:select {:name "level"
+             :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :level] (-> e .-target .-value))))}
     (map (fn [option] [:option {:value (:value option) :key (:value option)} (:label option)])
          [{:value :trace :label "TRACE"}
           {:value :debug :label "DEBUG"}
           {:value :info :label "INFO"}
           {:value :warn :label "WARN"}
           {:value :fatal :label "FATAL"}])]
-   [:textarea {:name "body"
-               :placeholder "log here"
+   [:textarea {:placeholder "log here"
                :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
-   [:pre#preview (str "preview:" (get-in (rum/react db) [:form :body]))]
+   [:pre#preview (str "preview: [" (get-in (rum/react db) [:form :level]) "] " (get-in (rum/react db) [:form :body]))]
    [:button {:type "submit"} "send"]])
 
 (rum/defc recent-logs [db]
