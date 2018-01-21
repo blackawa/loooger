@@ -11,7 +11,6 @@
                  [duct/module.sql "0.4.2"]
                  [org.postgresql/postgresql "42.1.4"]
                  [rum "0.10.8"]
-                 ;; [org.pac4j/pac4j-oauth "2.2.1"]
                  [clj-http "3.7.0"]
                  [cljs-http "0.1.44"]
                  [honeysql "0.9.1"]
