@@ -1,6 +1,10 @@
 (ns front.web.view.accounts
   (:require [rum.core :as rum]
-            [front.web.view.layout :refer [layout]]))
+            [front.web.view.layout :refer [layout]]
+            #?(:cljs [cljs-http.client :as http])
+            #?(:cljs [cljs.core.async :refer [<!]])
+            #?(:cljs [front.web.view.endpoint.logs :as logs]))
+  #?(:cljs (:require-macros [cljs.core.async.macros :refer [go]])))
 
 (defn db
   ([] (db {}))
@@ -19,8 +23,7 @@
    [:textarea {:placeholder "log here"
                :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
    [:pre#preview (str "preview: [" (get-in (rum/react db) [:form :level]) "] " (get-in (rum/react db) [:form :body]))]
-   [:button {:type "submit"
-             :on-click (fn [_] #?(:cljs (.log js/console "clicked")))} "send"]])
+   [:button {:on-click (fn [_] #?(:cljs (logs/create {:body "xxx" :level "yyy"})))} "send"]])
 
 (rum/defc recent-logs [db]
   ;; TODO: fetch logs
@@ -32,5 +35,5 @@
 
 (rum/defc logs [db]
   [:div
-   (recent-logs db)
+   ;; (recent-logs db)
    (log-form db)])
