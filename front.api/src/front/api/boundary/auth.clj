@@ -1,5 +1,6 @@
 (ns front.api.boundary.auth
-  (:require [taoensso.carmine :as car]))
+  (:require [taoensso.carmine :as car]
+            [front.api.component.redis]))
 
 (defprotocol AuthClient
   (fetch-account-id [redis token]))
