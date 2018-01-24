@@ -22,7 +22,6 @@
           {:value :fatal :label "FATAL"}])]
    [:textarea {:placeholder "log here"
                :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
-   [:pre#preview (str "preview: [" (get-in (rum/react db) [:form :level]) "] " (get-in (rum/react db) [:form :body]))]
    [:button {:on-click (fn [_] #?(:cljs (logs/create {:body "xxx" :level "yyy"})))} "send"]])
 
 (rum/defc recent-logs [db]
