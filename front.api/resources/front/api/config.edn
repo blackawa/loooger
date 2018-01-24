@@ -6,10 +6,14 @@
  :duct.server.http/jetty {:port 3001}
  :front.api.component/redis {:host #duct/env ["REDIS_HOST"]
                              :port #duct/env ["REDIS_PORT"]}
+ :front.api.component/secrets {:host "https://loooger.com"}
 
  ;; routing
  :duct.module/ataraxy
  {["/accounts/" account-id "/logs"]
-  {[:post ""] [:logs/create account-id]}}
+  {[:options ""] [:logs/permit-post]
+   [:post ""] [:logs/create account-id]}}
  ;; handlers
- :front.api.handler.logs/create {:redis #ig/ref :front.api.component/redis}}
+ :front.api.handler.logs/create {:redis #ig/ref :front.api.component/redis
+                                 :secrets #ig/ref :front.api.component/secrets}
+ :front.api.handler.logs/permit-post {:secrets #ig/ref :front.api.component/secrets}}

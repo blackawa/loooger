@@ -7,5 +7,4 @@
 (extend-protocol AuthClient
   front.api.component.redis.Boundary
   (fetch-account-id [{conn :spec} token]
-    (-> (car/wcar conn (car/get (str "carmine:session:" token)))
-        :id)))
+    (-> (car/wcar conn (car/get (str "carmine:session:" token))) :id)))
