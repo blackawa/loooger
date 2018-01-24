@@ -10,7 +10,10 @@
    "Access-Control-Allow-Credentials" "true"})
 
 (defmethod ig/init-key ::create [_ {{host :host} :secrets redis :redis}]
-  (fn [{{bearer-token "authorization"} :headers [_ account-id-from-url] :ataraxy/result :as req}]
+  (fn [{{bearer-token "authorization"} :headers
+        [_ account-id-from-url] :ataraxy/result
+        log :body-params
+        :as req}]
     (let [;; FIXME Cause NullPointerException when authorization header is not set!
           token (last (clojure.string/split bearer-token #" "))
           account-id-from-token (auth/fetch-account-id redis token)]
@@ -18,6 +21,7 @@
               (not (= (str account-id-from-token) (str account-id-from-url))))
         [::response/unauthorized]
         (let [log-id "xxx"]
+          (println log)
           {:status 201
            :headers (assoc (cors-headers host)
                            "Location"
