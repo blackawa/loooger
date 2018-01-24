@@ -1,14 +1,26 @@
 version: '3'
 services:
-  search:
+  fts:
     image: 'docker.elastic.co/elasticsearch/elasticsearch:6.1.2'
     ports:
       - '9200:9200'
       - '9300:9300'
     environment:
-      'discovery.type': 'single-node'
+      DISCOVERY_TYPE: 'single-node'
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - fts-data:/usr/share/elasticsearch/data
+    networks:
+      fts-family:
+  viz:
+    image: 'docker.elastic.co/kibana/kibana:6.1.2'
+    ports:
+      - '5601:5601'
+    environment:
+      ELASTICSEARCH_URL: 'http://fts:9200'
+    networks:
+      fts-family:
 volumes:
-  esdata:
+  fts-data:
     driver: local
+networks:
+  fts-family:
