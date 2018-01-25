@@ -22,7 +22,7 @@
           {:value :fatal :label "FATAL"}])]
    [:textarea {:placeholder "log here"
                :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
-   [:button {:on-click (fn [_] #?(:cljs (logs/create {:body "xxx" :level "yyy"})))} "send"]])
+   [:button {:on-click (fn [_] #?(:cljs (logs/create (:form @db))))} "send"]])
 
 (rum/defc recent-logs [db]
   ;; TODO: fetch logs
