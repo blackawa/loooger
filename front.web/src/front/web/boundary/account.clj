@@ -41,5 +41,5 @@
           :where [:= :name github-account-name]}
          sql/format
          (jdbc/query db)
-         not
-         empty?)))
+         empty?
+         not)))

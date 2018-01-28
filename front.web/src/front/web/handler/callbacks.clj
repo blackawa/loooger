@@ -2,9 +2,7 @@
   (:require [ataraxy.response :as response]
             [integrant.core :as ig]
             [front.web.boundary.github]
-            [front.web.boundary.account :as account]
-            [front.web.view.errors :refer [unauthorized]]
-            [rum.core :as rum]))
+            [front.web.boundary.account :as account]))
 
 (defmethod ig/init-key ::github [_ {:keys [db github]}]
   (fn [{{:keys [code state]} :params session :session}]
@@ -15,7 +13,7 @@
           (front.web.boundary.github/fetch-account
            github {:access-token access-token})]
       (if (not (account/sign-up-permitted? db name))
-        [::response/unauthorized (rum/render-html unauthorized)]
+        [::response/see-other "/signup_requests/new"]
         (let [signed-up? (account/signed-up-with-github? db github-account-id)
               account-id (if signed-up?
                            (:id signed-up?)
