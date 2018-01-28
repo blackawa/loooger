@@ -12,17 +12,23 @@
 
 (rum/defc log-form < rum/reactive [db]
   [:div
-   [:select {:name "level"
-             :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :level] (-> e .-target .-value))))}
-    (map (fn [option] [:option {:value (:value option) :key (:value option)} (:label option)])
-         [{:value :trace :label "TRACE"}
-          {:value :debug :label "DEBUG"}
-          {:value :info :label "INFO"}
-          {:value :warn :label "WARN"}
-          {:value :fatal :label "FATAL"}])]
-   [:textarea {:placeholder "log here"
-               :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]
-   [:button {:on-click (fn [_] #?(:cljs (logs/create {:body "xxx" :level "yyy"})))} "send"]])
+   [:div.field
+    [:textarea.textarea
+     {:placeholder "body"
+      :on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :body] (-> e .-target .-value))))}]]
+   [:div.field.is-grouped
+    [:div.control
+     [:div.select
+      [:select
+       {:on-change (fn [e] #?(:cljs (swap! db assoc-in [:form :level] (-> e .-target .-value))))}
+       (map (fn [option] [:option {:value (:value option) :key (:value option)} (:label option)])
+            [{:value :trace :label "TRACE"}
+             {:value :debug :label "DEBUG"}
+             {:value :info :label "INFO"}
+             {:value :warn :label "WARN"}
+             {:value :fatal :label "FATAL"}])]]]
+    [:div.control
+     [:button.button.is-link {:on-click (fn [_] #?(:cljs (logs/create (:form @db))))} "send"]]]])
 
 (rum/defc recent-logs [db]
   ;; TODO: fetch logs
@@ -33,6 +39,7 @@
     [:div [:ul (map (fn [log] [:li {:key (:id log)} (str log)]) logs)]]))
 
 (rum/defc logs [db]
-  [:div
-   ;; (recent-logs db)
-   (log-form db)])
+  [:div#logs.columns.is-vcentered
+   [:div.column
+    ;; (recent-logs db)
+    (log-form db)]])

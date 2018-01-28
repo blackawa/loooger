@@ -4,7 +4,8 @@
 
 (rum/defc index [{:keys [github-authorization-url]}]
   (layout
-   [:h1 "Roots#index"]
-   [:p
-    [:a {:href github-authorization-url}
-     "Sign in with GitHub"]]))
+   [:section.has-text-centered
+    [:a.button.is-black {:href github-authorization-url}
+     [:span.icon
+      [:i.fab.fa-github]]
+     [:span "Sign in with GitHub"]]]))
