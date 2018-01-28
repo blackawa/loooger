@@ -7,7 +7,8 @@
 
 (defprotocol Account
   (create [db account])
-  (signed-up-with-github? [db github-account-id]))
+  (signed-up-with-github? [db github-account-id])
+  (sign-up-permitted? [db github-account-name]))
 
 (extend-protocol Account
   duct.database.sql.Boundary
@@ -33,4 +34,12 @@
           :where [:= :github_account_id github-account-id]}
          (sql/format)
          (jdbc/query db)
-         first)))
+         first))
+  (sign-up-permitted? [{db :spec} github-account-name]
+    (->> {:select [:1]
+          :from [:signup_permitted_github_accounts]
+          :where [:= :name github-account-name]}
+         sql/format
+         (jdbc/query db)
+         not
+         empty?)))

@@ -1,0 +1,1 @@
+drop table signup_permitted_github_accounts;
