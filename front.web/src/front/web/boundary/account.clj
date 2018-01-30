@@ -2,6 +2,7 @@
   (:require [clj-time.core :as time]
             [clj-time.jdbc]
             [clojure.java.jdbc :as jdbc]
+            [duct.database.sql]
             [honeysql.core :as sql]
             [honeysql.helpers :as helpers]))
 
