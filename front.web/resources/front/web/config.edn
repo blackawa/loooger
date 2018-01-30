@@ -20,21 +20,28 @@
   "/callback"
   {[:get "/github"] [:callbacks/github]}
   "/accounts"
-  {[:get "/" id] [:accounts/show id]}}
+  {[:get "/" id] [:accounts/show id]}
+  "/signup_requests"
+  {[:get "/new"] [:signup-requests/new]}}
  ;; handlers
  :front.web.handler.roots/index {:secrets #ig/ref :front.web.component/secrets
                                  :github #ig/ref :front.web.component/github}
  :front.web.handler.callbacks/github {:github #ig/ref :front.web.component/github
                                       :db #ig/ref :duct.database/sql}
  :front.web.handler.accounts/show {:db #ig/ref :duct.database/sql}
+ :front.web.handler.signup-requests/new {}
 
  ;; migrations
  :duct.migrator/ragtime
  {:migrations [#ig/ref :front.web.migration/accounts
-               #ig/ref :front.web.migration/account-github-access-tokens]}
+               #ig/ref :front.web.migration/account-github-access-tokens
+               #ig/ref :front.web.migration/signup-permitted-github-accounts]}
  [:duct.migrator.ragtime/sql :front.web.migration/accounts]
  {:up [#duct/resource "front/web/migration/accounts.up.sql"]
   :down [#duct/resource "front/web/migration/accounts.down.sql"]}
  [:duct.migrator.ragtime/sql :front.web.migration/account-github-access-tokens]
  {:up [#duct/resource "front/web/migration/account-github-access-tokens.up.sql"]
-  :down [#duct/resource "front/web/migration/account-github-access-tokens.down.sql"]}}
+  :down [#duct/resource "front/web/migration/account-github-access-tokens.down.sql"]}
+ [:duct.migrator.ragtime/sql :front.web.migration/signup-permitted-github-accounts]
+ {:up [#duct/resource "front/web/migration/signup-permitted-github-accounts.up.sql"]
+  :down [#duct/resource "front/web/migration/signup-permitted-github-accounts.down.sql"]}}
