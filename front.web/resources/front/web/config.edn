@@ -3,7 +3,8 @@
 
  :duct.module/logging {}
  :duct.module.web/site {}
- :duct.module/sql {}
+ :duct.module/sql
+ {:database-url #duct/env ["DATABASE_URL"]}
  :duct.module/cljs {:main front.web.client}
  :duct.middleware.web/defaults {:session
                                 {:store #ig/ref :front.web.component/session-store
