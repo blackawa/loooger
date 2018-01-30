@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: front.web
+spec:
+  containers:
+    - image: gcr.io/po2r-193708/front.web:0.1.0-SNAPSHOT
+      imagePullPolicy: Always
+      name: front.web
+      env:
+        - name: GITHUB_CLIENT_ID
+          value:
+        - name: GITHUB_CLIENT_SECRET
+          value:
+        - name: REDIS_HOST
+          value:
+        - name: REDIS_PORT
+          value:
+        - name: DATABASE_URL
+          value:
