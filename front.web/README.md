@@ -2,6 +2,14 @@
 
 FIXME: description
 
+## Deployment
+
+Submit project to Google Cloud Container Builder.
+
+```
+gcloud container builds submit --config=cloudbuild.yml .
+```
+
 ## Developing
 
 ### Setup
