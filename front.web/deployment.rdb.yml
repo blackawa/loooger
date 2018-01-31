@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: rdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: rdb
+    spec:
+      containers:
+      - image: docker.io/postgres
+        name: rdb
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.password
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.username
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.database
