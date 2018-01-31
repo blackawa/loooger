@@ -1,0 +1,14 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kvs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kvs
+    spec:
+      containers:
+      - image: docker.io/redis
+        name: kvs
