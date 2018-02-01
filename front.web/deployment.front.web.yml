@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: front-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: front-web
+    spec:
+      containers:
+      - image: gcr.io/po2r-193708/front.web:0.1.0-SNAPSHOT
+        imagePullPolicy: Always
+        name: front-web
+        env:
+          - name: GITHUB_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.github.client.id
+          - name: GITHUB_CLIENT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.github.client.secret
+          - name: DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.database
+          - name: DATABASE_USER
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.username
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.password
+          - name: DATABASE_URL
+            value: "jdbc:postgresql://$(RDB_SERVICE_HOST):$(RDB_SERVICE_PORT)/$(DATABASE)?user=$(DATABASE_USER)&password=$(DATABASE_PASSWORD)"
+          - name: REDIS_HOST
+            value: "$(KVS_SERVICE_HOST)"
+          - name: REDIS_PORT
+            value: "$(KVS_SERVICE_PORT)"
