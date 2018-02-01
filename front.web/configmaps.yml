@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: po2r-config
+data:
+  front.web.rdb.password:
+  front.web.rdb.username:
+  front.web.rdb.database:
+  front.web.github.client.id:
+  front.web.github.client.secret:
