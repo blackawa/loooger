@@ -8,7 +8,8 @@
  :duct.middleware.web/defaults {:session
                                 {:store #ig/ref :front.web.component/session-store
                                  :cookie-attrs {:http-only false}}}
- :front.web.component/secrets {:github {:client-id #duct/env ["GITHUB_CLIENT_ID"]
+ :front.web.component/secrets {:host "http://po2r.com"
+                               :github {:client-id #duct/env ["GITHUB_CLIENT_ID"]
                                         :client-secret #duct/env ["GITHUB_CLIENT_SECRET"]}}
  :front.web.component/github {:secrets #ig/ref :front.web.component/secrets}
  :front.web.component/session-store {:host #duct/env ["REDIS_HOST"]
