@@ -1,0 +1,8 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-web
+spec:
+  backend:
+    serviceName: front-web
+    servicePort: 3000
