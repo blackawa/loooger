@@ -5,9 +5,11 @@ metadata:
 spec:
   template:
     spec:
+      restartPolicy: Never
       containers:
       - name: front-web-migrator
         image: gcr.io/po2r-193708/front.web.migrator:0.1.0-SNAPSHOT
+        imagePullPolicy: Always
         env:
           - name: DATABASE
             valueFrom:
@@ -26,4 +28,3 @@ spec:
                 key: front.web.rdb.password
           - name: DATABASE_URL
             value: "jdbc:postgresql://$(RDB_SERVICE_HOST):$(RDB_SERVICE_PORT)/$(DATABASE)?user=$(DATABASE_USER)&password=$(DATABASE_PASSWORD)"
-      restartPolicy: Never
