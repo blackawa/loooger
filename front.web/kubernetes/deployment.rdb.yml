@@ -12,7 +12,12 @@ spec:
       containers:
       - image: docker.io/postgres
         name: rdb
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: rdb
         env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
           - name: POSTGRES_PASSWORD
             valueFrom:
               configMapKeyRef:
@@ -28,3 +33,7 @@ spec:
               configMapKeyRef:
                 name: po2r-config
                 key: front.web.rdb.database
+      volumes:
+      - name: rdb
+        persistentVolumeClaim:
+          claimName: rdb
