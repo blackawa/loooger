@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: front-web-migrator
+spec:
+  template:
+    spec:
+      containers:
+      - name: front-web-migrator
+        image: gcr.io/po2r-193708/front.web.migrator:0.1.0-SNAPSHOT
+        env:
+          - name: DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.database
+          - name: DATABASE_USER
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.username
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: po2r-config
+                key: front.web.rdb.password
+          - name: DATABASE_URL
+            value: "jdbc:postgresql://$(RDB_SERVICE_HOST):$(RDB_SERVICE_PORT)/$(DATABASE)?user=$(DATABASE_USER)&password=$(DATABASE_PASSWORD)"
+      restartPolicy: Never
