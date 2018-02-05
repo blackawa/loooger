@@ -8,6 +8,7 @@ Submit project to Google Cloud Container Builder.
 
 ```
 gcloud container builds submit --config=cloudbuild.yml .
+gcloud container builds submit --config=cloudbuild.migrator.yml .
 ```
 
 ## Developing
