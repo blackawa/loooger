@@ -34,15 +34,20 @@
 
  ;; migrations
  :duct.migrator/ragtime
- {:migrations [#ig/ref :front.web.migration/accounts
-               #ig/ref :front.web.migration/account-github-access-tokens
-               #ig/ref :front.web.migration/signup-permitted-github-accounts]}
- [:duct.migrator.ragtime/sql :front.web.migration/accounts]
- {:up [#duct/resource "front/web/migration/accounts.up.sql"]
-  :down [#duct/resource "front/web/migration/accounts.down.sql"]}
- [:duct.migrator.ragtime/sql :front.web.migration/account-github-access-tokens]
- {:up [#duct/resource "front/web/migration/account-github-access-tokens.up.sql"]
-  :down [#duct/resource "front/web/migration/account-github-access-tokens.down.sql"]}
- [:duct.migrator.ragtime/sql :front.web.migration/signup-permitted-github-accounts]
- {:up [#duct/resource "front/web/migration/signup-permitted-github-accounts.up.sql"]
-  :down [#duct/resource "front/web/migration/signup-permitted-github-accounts.down.sql"]}}
+ ;; namespace keyword cannot start from integer...
+ {:migrations [#ig/ref :front.web.migration/accounts-201802051020
+               #ig/ref :front.web.migration/account-github-access-tokens-201802051020
+               #ig/ref :front.web.migration/signup-permitted-github-accounts-201802051020
+               #ig/ref :front.web.migration/signup-permitted-github-accounts-201802051023]}
+ [:duct.migrator.ragtime/sql :front.web.migration/accounts-201802051020]
+ {:up [#duct/resource "front/web/migration/201802051020.accounts.up.sql"]
+  :down [#duct/resource "front/web/migration/201802051020.accounts.down.sql"]}
+ [:duct.migrator.ragtime/sql :front.web.migration/account-github-access-tokens-201802051020]
+ {:up [#duct/resource "front/web/migration/201802051020.account-github-access-tokens.up.sql"]
+  :down [#duct/resource "front/web/migration/201802051020.account-github-access-tokens.down.sql"]}
+ [:duct.migrator.ragtime/sql :front.web.migration/signup-permitted-github-accounts-201802051020]
+ {:up [#duct/resource "front/web/migration/201802051020.signup-permitted-github-accounts.up.sql"]
+  :down [#duct/resource "front/web/migration/201802051020.signup-permitted-github-accounts.down.sql"]}
+ [:duct.migrator.ragtime/sql :front.web.migration/signup-permitted-github-accounts-201802051023]
+ {:up [#duct/resource "front/web/migration/201802051023.signup-permitted-github-accounts.up.sql"]
+  :down [#duct/resource "front/web/migration/201802051023.signup-permitted-github-accounts.down.sql"]}}
