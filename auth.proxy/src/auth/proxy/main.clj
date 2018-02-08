@@ -1,9 +1,11 @@
 (ns auth.proxy.main
   (:import [io.undertow Undertow]
-           [io.undertow.server HttpHandler]
-           [io.undertow.util Headers]
-           [io.undertow.client ClientCallback ClientConnection]
-           [io.undertow.server.handlers.proxy ProxyHandler])
+           [io.undertow.server HttpHandler ServerConnection ServerConnection$CloseListener]
+           [io.undertow.util Headers AttachmentKey]
+           [io.undertow.client ClientCallback ClientConnection UndertowClient]
+           [io.undertow.server.handlers.proxy ProxyHandler ProxyClient ProxyClient$ProxyTarget ProxyConnection]
+           [org.xnio IoUtils OptionMap ChannelListener]
+           [java.net URI])
   (:gen-class))
 
 (defonce web-server (atom nil))
@@ -54,19 +56,53 @@
     (stop-api-server))
   (reset! api-server nil))
 
-;; define ProxyClient
-(defn uri-proxy-client [])
+(defn- connect-notifier [attachment-key uri callback exchange]
+  (reify ClientCallback
+    (completed [this client-connection]
+      (let [server-connection (.getConnection exchange)]
+        (.putAttachment server-connection attachment-key client-connection)
+        (.addCloseListener server-connection (reify ServerConnection$CloseListener
+                                               (closed [this server-connection]
+                                                 (IoUtils/safeClose client-connection))))
+        (.set (.getCloseSetter client-connection) (reify ChannelListener
+                                                    (handleEvent [this channel]
+                                                      (.removeAttachment server-connection attachment-key))))
+        (.completed callback
+                    exchange
+                    (ProxyConnection. client-connection (or (.getPath uri) "/")))))
+    (failed [this io-exception]
+      (.failed callback exchange))))
 
-(defn connect-notifier [])
+(defn- uri-proxy-client []
+  (let [client (UndertowClient/getInstance)
+        attachment-key (AttachmentKey/create ClientConnection)]
+    (reify ProxyClient
+      (findTarget [this exchange] (reify ProxyClient$ProxyTarget))
+      (getConnection [this proxy-target exchange proxy-callback timeout timeunit]
+        (let [existing (-> exchange .getConnection (.getAttachment attachment-key))
+              uri (.getRequestURI exchange)]
+          (if (not (nil? existing))
+            (if (.isOpen existing)
+              (-> proxy-callback
+                  (.completed exchange
+                              (ProxyConnection. existing (or (.getPath uri) "/"))))
+              (do (-> exchange
+                      .getConnection
+                      (.removeAttachment attachment-key))
+                  (-> client
+                      (.connect
+                       (connect-notifier attachment-key uri proxy-callback exchange)
+                       (URI. (.getScheme uri) nil (.getHost uri) 8081)
+                       (.getIoThread exchange)
+                       (-> exchange .getConnection .getByteBufferPool)
+                       (OptionMap/EMPTY)))))))))))
 
-;; define ProxyHandler
 (defn uri-proxy-handler [proxy-client]
   (-> (ProxyHandler/builder)
       (.setProxyClient proxy-client)
       (.setMaxRequestTime 30000)
       .build))
 
-;; start server
 (defonce proxy-server (atom nil))
 (defn start-proxy-server []
   (when (not @proxy-server)
