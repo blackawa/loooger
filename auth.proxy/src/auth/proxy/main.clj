@@ -1,7 +1,9 @@
 (ns auth.proxy.main
   (:import [io.undertow Undertow]
            [io.undertow.server HttpHandler]
-           [io.undertow.util Headers])
+           [io.undertow.util Headers]
+           [io.undertow.client ClientCallback ClientConnection]
+           [io.undertow.server.handlers.proxy ProxyHandler])
   (:gen-class))
 
 (defonce web-server (atom nil))
@@ -21,10 +23,9 @@
         .build
         (#(reset! web-server %)))
     (.start @web-server)))
-
 (defn stop-web-server []
-  (.stop @web-server))
-
+  (when @web-server
+    (.stop @web-server)))
 (defn clean-up-web-server []
   (when (not @web-server)
     (stop-web-server))
@@ -45,25 +46,39 @@
         .build
         (#(reset! api-server %)))
     (.start @api-server)))
-
 (defn stop-api-server []
-  (.stop @api-server))
-
+  (when @api-server
+    (.stop @api-server)))
 (defn clean-up-api-server []
   (when (not @api-server)
     (stop-api-server))
   (reset! api-server nil))
 
 ;; define ProxyClient
-(defn content-type-proxy-client [])
+(defn uri-proxy-client [])
+
+(defn connect-notifier [])
 
 ;; define ProxyHandler
-(defn contnt-type-proxy-handler [])
+(defn uri-proxy-handler [proxy-client]
+  (-> (ProxyHandler/builder)
+      (.setProxyClient proxy-client)
+      (.setMaxRequestTime 30000)
+      .build))
 
 ;; start server
 (defonce proxy-server (atom nil))
-(defn start-proxy-server [])
-(defn stop-proxy-server [])
+(defn start-proxy-server []
+  (when (not @proxy-server)
+    (-> (Undertow/builder)
+        (.addHttpListener 8080 "localhost")
+        (.setHandler (uri-proxy-handler (uri-proxy-client)))
+        .build
+        (#(reset! proxy-server %))))
+  (.start @proxy-server))
+(defn stop-proxy-server []
+  (when @proxy-server
+    (.stop @proxy-server)))
 (defn clean-up-proxy-server []
   (when (not @proxy-server)
     (stop-proxy-server))
