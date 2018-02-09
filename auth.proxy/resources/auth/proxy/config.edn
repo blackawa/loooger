@@ -1,0 +1,1 @@
+{:auth.proxy.component/undertow {:port 3000}}
