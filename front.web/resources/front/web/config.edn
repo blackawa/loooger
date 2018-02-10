@@ -3,6 +3,7 @@
 
  :duct.module/logging {}
  :duct.module.web/site {}
+ :duct.server.http/jetty {:port 3002}
  :duct.module/sql {}
  :duct.module/cljs {:main front.web.client}
  :duct.middleware.web/defaults {:session

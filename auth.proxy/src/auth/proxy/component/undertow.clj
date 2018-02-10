@@ -1,32 +1,22 @@
 (ns auth.proxy.component.undertow
   (:require [integrant.core :as ig])
   (:import [io.undertow Undertow]
-           [io.undertow.server HttpHandler ServerConnection ServerConnection$CloseListener]
-           [io.undertow.util Headers AttachmentKey]
-           [io.undertow.client ClientCallback ClientConnection UndertowClient]
-           [io.undertow.server.handlers.proxy ProxyHandler ProxyClient ProxyClient$ProxyTarget ProxyConnection]
-           [org.xnio IoUtils OptionMap ChannelListener]
-           [java.net URI]))
+           [io.undertow.server HttpHandler]
+           [io.undertow.server.handlers.proxy ProxyHandler]
+           [io.undertow.util Headers]))
 
 (defn- run [server]
   (.start server)
   server)
 
-(defn- proxy-client []
-  (reify HttpHandler
-    (handleRequest [this exchange]
-      (-> exchange
-          .getResponseHeaders
-          (.put (Headers/CONTENT_TYPE) "text/html; charset=utf-8"))
-      (-> exchange
-          .getResponseSender
-          (.send "<h1>Hello from web server</h1>")))))
-
-(defmethod ig/init-key :auth.proxy.component/undertow [_ {:keys [port]}]
+(defmethod ig/init-key :auth.proxy.component/undertow [_ {:keys [port proxy-client]}]
+  (println proxy-client)
   (println (str "start undertow server on localhost:" port))
   (-> (Undertow/builder)
       (.addHttpListener port "localhost")
-      (.setHandler (proxy-client))
+      (.setHandler (-> (ProxyHandler/builder)
+                       (.setProxyClient proxy-client)
+                       .build))
       .build
       run))
 
