@@ -1,36 +1,34 @@
 # auth.proxy
 
-FIXME: description
+Authentication proxy server for Web and API server.
 
-## Installation
+## Development
 
-Download from http://example.com/FIXME.
+```
+lein repl
+user=> (go)
+;; will start server
+user=> (reset)
+;; will reload server
+user=> (halt)
+;; will stop server
+```
 
-## Usage
+## Deployment
 
-FIXME: explanation
+```
+lein do clean, uberjar
+```
 
-    $ java -jar auth.proxy-0.1.0-standalone.jar [args]
+will create standalone jar file.
 
-## Options
+You can start this file like
 
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+```
+PORT=3000 java -jar target/uberjar/auth.proxy-0.1.0-SNAPSHOT.standalone.jar
+```
 
 ## License
 
-Copyright © 2018 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Copyright © 2018 blackawa
+Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
