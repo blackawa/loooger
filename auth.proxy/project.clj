@@ -7,7 +7,10 @@
                  [integrant "0.6.3"]
                  [integrant/repl "0.3.0"]
                  [io.undertow/undertow-core "1.4.22.Final"]
-                 [hikari-cp "2.2.0"]]
+                 [hikari-cp "2.2.0"]
+                 [org.clojure/java.jdbc "0.7.5"]
+                 [org.postgresql/postgresql "42.1.4"]
+                 [com.taoensso/carmine "2.17.0"]]
   :main ^:skip-aot auth.proxy.main
   :resource-paths ["resources"]
   :target-path "target/%s"
