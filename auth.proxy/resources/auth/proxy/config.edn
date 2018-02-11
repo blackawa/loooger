@@ -1,7 +1,8 @@
 {:auth.proxy.component/undertow
  {:port 3000
-  :proxy-client #ig/ref :auth.proxy.component/proxy-client}
- :auth.proxy.component/proxy-client
+  :handler #ig/ref :auth.proxy.component/header-handler}
+ :auth.proxy.component/proxy-handler
  {:predicates
   [{:context-path "/api" :endpoint #env ["FRONT_API_ENDPOINT" Str :or "http://localhost:3001"]}
-   {:context-path "/" :endpoint #env ["FRONT_WEB_ENDPOINT" Str :or "http://localhost:3002"]}]}}
+   {:context-path "/" :endpoint #env ["FRONT_WEB_ENDPOINT" Str :or "http://localhost:3002"]}]}
+ :auth.proxy.component/header-handler {:next-handler #ig/ref :auth.proxy.component/proxy-handler}}
