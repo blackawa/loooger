@@ -6,12 +6,9 @@
   [{:context-path "/api" :endpoint #env ["FRONT_API_ENDPOINT" Str :or "http://localhost:3001"]}
    {:context-path "/" :endpoint #env ["FRONT_WEB_ENDPOINT" Str :or "http://localhost:3002"]}]}
  :auth.proxy.component/header-handler {:next-handler #ig/ref :auth.proxy.component/proxy-handler
-                                       :database #ig/ref :auth.proxy.component/database
                                        :session-store #ig/ref :auth.proxy.component/session-store}
- :auth.proxy.component/database
- {:config {:jdbc-url #env ["JDBC_URL" Str :or "jdbc:postgresql://127.0.0.1:5456/front.web"]
-           :username "front.web"
-           :password "p@ssw0rd"}}
+ ;; :auth.proxy.component/database
+ ;; {:config {:jdbc-url #env ["JDBC_URL" Str :or "jdbc:postgresql://127.0.0.1:5456/front.web"] :username "front.web" :password "p@ssw0rd"}}
  :auth.proxy.component/session-store
  {:host #env ["REDIS_HOST" Str :or "127.0.0.1"]
   :port #env ["REDIS_PORT" Str :or "6345"]}}

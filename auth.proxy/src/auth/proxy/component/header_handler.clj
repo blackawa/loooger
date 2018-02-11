@@ -62,7 +62,7 @@
 ;; Accept from internal application
 ;;   - X-Auth header
 (defmethod ig/init-key :auth.proxy.component/header-handler
-  [_ {:keys [next-handler database session-store]}]
+  [_ {:keys [next-handler session-store]}]
   (reify HttpHandler
     (handleRequest [this exchange]
       (add-authorization-header exchange session-store)
