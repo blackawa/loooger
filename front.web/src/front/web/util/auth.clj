@@ -1,4 +1,6 @@
 (ns front.web.util.auth)
 
-(defn user-signed-in? [session]
-  (boolean (:id session)))
+(defn session [headers]
+  (println headers)
+  (-> (get headers "x-auth")
+      (#(when % (read-string %)))))

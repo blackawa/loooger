@@ -5,7 +5,7 @@
             [front.web.boundary.account :as account]))
 
 (defmethod ig/init-key ::github [_ {:keys [db github]}]
-  (fn [{{:keys [code state]} :params session :session}]
+  (fn [{{:keys [code state]} :params}]
     (let [access-token
           (front.web.boundary.github/fetch-access-token
            github {:code code :state state})
@@ -22,5 +22,5 @@
                                                :access_token access-token
                                                :access_token_type :github}))]
           {:status 301
-           :headers {"location" (str "/accounts/" account-id)}
-           :session (assoc session :id account-id)})))))
+           :headers {"location" (str "/accounts/" account-id)
+                     "X-Auth" (str {:v {:id account-id}})}})))))

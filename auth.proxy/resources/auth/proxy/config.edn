@@ -1,12 +1,12 @@
 {:auth.proxy.component/undertow
  {:port 3000
-  :handler #ig/ref :auth.proxy.component/header-handler}
- :auth.proxy.component/proxy-handler
- {:predicates
-  [{:context-path "/api" :endpoint #env ["FRONT_API_ENDPOINT" Str :or "http://localhost:3001"]}
-   {:context-path "/" :endpoint #env ["FRONT_WEB_ENDPOINT" Str :or "http://localhost:3002"]}]}
- :auth.proxy.component/header-handler {:next-handler #ig/ref :auth.proxy.component/proxy-handler
-                                       :session-store #ig/ref :auth.proxy.component/session-store}
+  :handler #ig/ref :auth.proxy.handler/path}
+ :auth.proxy.handler/api {:backend-path #env ["FRONT_API_ENDPOINT" Str :or "http://localhost:3001"]
+                          :store #ig/ref :auth.proxy.component/session-store}
+ :auth.proxy.handler/web {:backend-path #env ["FRONT_WEB_ENDPOINT" Str :or "http://localhost:3002"]
+                          :store #ig/ref :auth.proxy.component/session-store}
+ :auth.proxy.handler/path {:paths [["/api" #ig/ref :auth.proxy.handler/api]
+                                   ["/" #ig/ref :auth.proxy.handler/web]]}
  ;; :auth.proxy.component/database
  ;; {:config {:jdbc-url #env ["JDBC_URL" Str :or "jdbc:postgresql://127.0.0.1:5456/front.web"] :username "front.web" :password "p@ssw0rd"}}
  :auth.proxy.component/session-store
