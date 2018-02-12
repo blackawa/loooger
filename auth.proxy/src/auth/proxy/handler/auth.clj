@@ -21,8 +21,6 @@
       (let [listener (reify ResponseCommitListener
                        (beforeCommit [this exchange]
                          (let [{:keys [k v]} (some-> (get-response-header exchange HEADER_KEY) read-string)]
-                           (println "k:" k)
-                           (println "v:" v)
                            (when (and k v)
                              ;; update session
                              (session-store-boundary/set store k v))

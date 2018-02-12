@@ -50,7 +50,7 @@
   (set-cookie [this k v]
     (some-> this
             .getResponseCookies
-            (.put k (CookieImpl. k v))))
+            (.put k (-> (CookieImpl. k) (.setValue v) (.setPath "/")))))
   (remove-cookie [this k]
     (some-> this
             .getResponseCookies
