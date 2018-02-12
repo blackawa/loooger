@@ -4,7 +4,7 @@
             [auth.proxy.util.exchange :refer :all])
   (:import [io.undertow.server HttpHandler ResponseCommitListener]))
 
-(def ^:private SESSION_KEY "SESSSION")
+(def ^:private SESSION_KEY "SESSION")
 (def ^:private HEADER_KEY "X-Auth")
 
 (defn handler [{:keys [next-handler store]}]

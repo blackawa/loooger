@@ -13,10 +13,8 @@
  ;; routing
  :duct.module/ataraxy
  {["/accounts/" account-id "/logs"]
-  {[:options ""] [:logs/permit-post]
-   [:post ""] [:logs/create account-id]}}
+  {[:post ""] [:logs/create account-id]}}
  ;; handlers
  :front.api.handler.logs/create {:redis #ig/ref :front.api.component/redis
                                  :secrets #ig/ref :front.api.component/secrets
-                                 :elasticsearch #ig/ref :front.api.component/elasticsearch}
- :front.api.handler.logs/permit-post {:secrets #ig/ref :front.api.component/secrets}}
+                                 :elasticsearch #ig/ref :front.api.component/elasticsearch}}

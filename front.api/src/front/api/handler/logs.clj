@@ -4,12 +4,6 @@
             [front.api.boundary.auth :as auth]
             [front.api.boundary.logs :as logs]))
 
-(defn- cors-headers [host]
-  {"Access-Control-Allow-Methods" "POST"
-   "Access-Control-Allow-Origin" host
-   "Access-Control-Allow-Headers" "Authorization, Content-Type"
-   "Access-Control-Allow-Credentials" "true"})
-
 (defmethod ig/init-key ::create [_ {{host :host} :secrets
                                     redis :redis
                                     elasticsearch :elasticsearch
@@ -28,9 +22,4 @@
           (if errors
             {:status 400 :body errors}
             (let [location (str "/accounts/" account-id-from-token "/logs/" (:id created-log))]
-              {:status 201 :headers (assoc (cors-headers host) "Location" location)})))))))
-
-(defmethod ig/init-key ::permit-post [_ {{host :host} :secrets}]
-  (fn [req]
-    {:status 200 :body ""
-     :headers (cors-headers host)}))
+              [::response/created location])))))))

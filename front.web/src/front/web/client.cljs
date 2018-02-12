@@ -6,7 +6,6 @@
 
 (def db (front.web.view.accounts/db))
 (def debug? ^boolean js/goog.DEBUG)
-(def endpoint (if debug? "localhost:3001" "api.loooger.com"))
 
 ;; mount react component
 (if-let [app (.getElementById js/document "app")]

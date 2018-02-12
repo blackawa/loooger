@@ -8,7 +8,7 @@
   [k]
   (->> js/document
        .-cookie
-       ((fn [source] (clojure.string/split source #"; ")))
+       (#(clojure.string/split % #"; "))
        (map #(clojure.string/split % #"="))
        (filter (fn [source] (= k (first source))))
        first
@@ -18,12 +18,13 @@
   (js/decodeURIComponent (str v)))
 
 (defn- fetch-token []
-  (last (clojure.string/split (url-decode (fetch "ring-session")) #":")))
+  (url-decode (fetch "SESSION")))
 
 (defn create [request-body]
-  (let [host front.web.client/endpoint]
-    (http/post
-     (str (.-protocol js/location) "//" host
-          (.-pathname js/location) "/logs")
-     {:oauth-token (fetch-token)
-      :edn-params request-body})))
+  (println "creating log")
+  (println (fetch-token))
+  (http/post
+   (str (.-protocol js/location) "//" (.-host js/location)
+        "/api" (.-pathname js/location) "/logs")
+   {:oauth-token (fetch-token)
+    :edn-params request-body}))
