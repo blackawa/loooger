@@ -1,5 +1,3 @@
 {:duct.core/environment :development
  :duct.core/include ["front/api/config"]
- :front.api.component/redis {:host "127.0.0.1" :port "6345"}
- :front.api.component/secrets {:host "http://localhost:3000"}
  :front.api.component/elasticsearch {:host "127.0.0.1" :port "9200"}}

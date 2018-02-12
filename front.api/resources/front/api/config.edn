@@ -4,17 +4,12 @@
  :duct.module/logging {}
  :duct.module.web/api {}
  :duct.server.http/jetty {:port 3001}
- :front.api.component/redis {:host #duct/env ["REDIS_HOST"]
-                             :port #duct/env ["REDIS_PORT"]}
  :front.api.component/elasticsearch {:host #duct/env ["ELASTICSEARCH_HOST"]
                                      :port #duct/env ["ELASTICSEARCH_PORT"]}
- :front.api.component/secrets {:host "https://loooger.com"}
 
  ;; routing
  :duct.module/ataraxy
  {["/accounts/" account-id "/logs"]
   {[:post ""] [:logs/create account-id]}}
  ;; handlers
- :front.api.handler.logs/create {:redis #ig/ref :front.api.component/redis
-                                 :secrets #ig/ref :front.api.component/secrets
-                                 :elasticsearch #ig/ref :front.api.component/elasticsearch}}
+ :front.api.handler.logs/create {:elasticsearch #ig/ref :front.api.component/elasticsearch}}
