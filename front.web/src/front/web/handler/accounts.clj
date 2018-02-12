@@ -12,6 +12,6 @@
     (let [session (auth/session headers)]
       (if (nil? session)
         [::response/see-other "/"]
-        (if (not (= (str id) (str (:id session))))
+        (if (not (= (str id) (str (get-in session [:v :id]))))
           [::response/not-found (rum/render-html (error-view/not-found))]
           [::response/ok (static-layout (rum/render-html (view/logs (view/db))))])))))
