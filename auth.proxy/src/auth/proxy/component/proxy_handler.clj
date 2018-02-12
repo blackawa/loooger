@@ -29,6 +29,8 @@
                    (reify ClientCallback
                      (completed [this client-connection]
                        (let [server-connection (.getConnection exchange)]
+                         (println "response header for" (.getRequestURI exchange) "is" (.getResponseHeaders exchange))
+                         (println "request header for" (.getRequestURI exchange) "is" (.getRequestHeaders exchange))
                          (.putAttachment server-connection attachment-key client-connection)
                          (.addCloseListener server-connection
                                             (reify ServerConnection$CloseListener
