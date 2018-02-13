@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: auth-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: auth-proxy
+    spec:
+      containers:
+      - image: gcr.io/po2r-193708/auth.proxy:0.1.0-SNAPSHOT
+        imagePullPolicy: Always
+        name: auth-proxy
+        env:
+          - name: REDIS_HOST
+            value: "$(KVS_SERVICE_HOST)"
+          - name: REDIS_PORT
+            value: "$(KVS_SERVICE_PORT)"

@@ -15,6 +15,7 @@
 
 (defn -main [& args]
   (-> (config)
+      (#(do (ig/load-namespaces %) %))
       (ig/init [:auth.proxy.component/undertow])
       (add-shutdown-hook))
   (.. Thread currentThread join))
