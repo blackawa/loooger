@@ -18,3 +18,7 @@ spec:
             value: "$(KVS_SERVICE_HOST)"
           - name: REDIS_PORT
             value: "$(KVS_SERVICE_PORT)"
+          - name: FRONT_WEB_ENDPOINT
+            value: "http://$(FRONT_WEB_SERVICE_HOST):$(FRONT_WEB_SERVICE_PORT)"
+          - name: FRONT_API_ENDPOINT
+            value: "http://$(FRONT_API_SERVICE_HOST):$(FRONT_API_SERVICE_PORT)"
