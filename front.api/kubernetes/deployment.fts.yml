@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fts
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: fts
+    spec:
+      containers:
+      - image: docker.elastic.co/elasticsearch/elasticsearch:6.1.2
+        name: fts
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: fts
+        env:
+          - name: DISCOVERY_TYPE
+            value: single-node
+      volumes:
+      - name: fts
+        persistentVolumeClaim:
+          claimName: fts

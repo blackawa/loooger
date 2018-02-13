@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fts
+spec:
+  type: ClusterIP
+  selector:
+    name: fts
+  ports:
+  - port: 9200
+    targetPort: 9200
