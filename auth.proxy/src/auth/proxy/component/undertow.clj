@@ -9,7 +9,7 @@
 (defmethod ig/init-key :auth.proxy.component/undertow [_ {:keys [port handler]}]
   (println (str "starting undertow server on localhost:" port))
   (-> (Undertow/builder)
-      (.addHttpListener port "localhost")
+      (.addHttpListener port "0.0.0.0")
       (.setHandler handler)
       .build
       run))
