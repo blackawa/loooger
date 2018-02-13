@@ -7,7 +7,6 @@
                  [duct/module.logging "0.3.1"]
                  [duct/module.web "0.6.4"]
                  [duct/module.ataraxy "0.2.0"]
-                 [com.taoensso/carmine "2.17.0"]
                  [com.google.cloud/google-cloud-bigquery "0.32.0-beta"]
                  [clj-http "3.7.0"]
                  [org.clojure/data.json "0.2.6"]]
