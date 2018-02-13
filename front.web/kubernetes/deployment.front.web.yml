@@ -41,7 +41,3 @@ spec:
                 key: front.web.rdb.password
           - name: DATABASE_URL
             value: "jdbc:postgresql://$(RDB_SERVICE_HOST):$(RDB_SERVICE_PORT)/$(DATABASE)?user=$(DATABASE_USER)&password=$(DATABASE_PASSWORD)"
-          - name: REDIS_HOST
-            value: "$(KVS_SERVICE_HOST)"
-          - name: REDIS_PORT
-            value: "$(KVS_SERVICE_PORT)"

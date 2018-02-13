@@ -4,5 +4,4 @@
  :duct.module/sql
  {:database-url "jdbc:postgresql://localhost:5456/front.web?user=front.web&password=p@ssw0rd"}
 
- :front.web.component/secrets {:host "http://localhost:3000"}
- :front.web.component/session-store {:host "127.0.0.1" :port "6345"}}
+ :front.web.component/secrets {:host "http://localhost:3000"}}

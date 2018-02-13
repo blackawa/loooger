@@ -21,8 +21,6 @@
   (url-decode (fetch "SESSION")))
 
 (defn create [request-body]
-  (println "creating log")
-  (println (fetch-token))
   (http/post
    (str (.-protocol js/location) "//" (.-host js/location)
         "/api" (.-pathname js/location) "/logs")

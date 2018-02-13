@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: front-web
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     name: front-web
   ports:
-    - port: 3000
+    - port: 3002
+      targetPort: 3002

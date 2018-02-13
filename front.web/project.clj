@@ -15,8 +15,7 @@
                  [cljs-http "0.1.44"]
                  [honeysql "0.9.1"]
                  [org.clojure/data.json "0.2.6"]
-                 [clj-time "0.14.2"]
-                 [com.taoensso/carmine "2.17.0"]]
+                 [clj-time "0.14.2"]]
   :plugins [[duct/lein-duct "0.10.6"]]
   :main ^:skip-aot front.web.main
   :resource-paths ["resources" "target/resources"]
