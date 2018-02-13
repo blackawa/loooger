@@ -5,3 +5,4 @@
             [auth.proxy.main :refer [config]]))
 
 (integrant.repl/set-prep! #(config))
+(ig/load-namespaces (config))
