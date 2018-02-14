@@ -10,7 +10,7 @@ spec:
         name: fts
     spec:
       containers:
-      - image: docker.elastic.co/elasticsearch/elasticsearch:6.1.2
+      - image: gcr.io/po2r-193708/fts:6.1.2
         name: fts
         volumeMounts:
         - mountPath: /usr/share/elasticsearch/data
