@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: front-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: front-api
+    spec:
+      containers:
+      - image: gcr.io/po2r-193708/front.api:0.1.0-SNAPSHOT
+        imagePullPolicy: Always
+        name: front-api
+        env:
+          - name: ELASTICSEARCH_HOST
+            value: "$(FTS_SERVICE_HOST)"
+          - name: ELASTICSEARCH_PORT
+            value: "$(FTS_SERVICE_PORT)"

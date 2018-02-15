@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-api
+spec:
+  type: ClusterIP
+  selector:
+    name: front-api
+  ports:
+    - port: 3001
+      targetPort: 3001

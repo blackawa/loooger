@@ -7,5 +7,9 @@ spec:
   selector:
     name: fts
   ports:
-  - port: 9200
+  - name: transaction
+    port: 9200
     targetPort: 9200
+  - name: cluster
+    port: 9300
+    targetPort: 9300

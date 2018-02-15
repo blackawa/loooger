@@ -11,6 +11,7 @@ spec:
     spec:
       containers:
       - image: gcr.io/po2r-193708/fts:6.1.2
+        imagePullPolicy: Always
         name: fts
         volumeMounts:
         - mountPath: /usr/share/elasticsearch/data

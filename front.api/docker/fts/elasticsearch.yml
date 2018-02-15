@@ -1,2 +1,4 @@
 path:
   data: /usr/share/elasticsearch/data/esdata
+network:
+  host: 0.0.0.0
