@@ -8,6 +8,10 @@ spec:
     metadata:
       labels:
         name: fts
+      # GCEの中にSSHログインして設定を無理やり書き換えた。
+      # この方法はスケールしないので永続はできない。
+      # annotations:
+        # security.alpha.kubernetes.io/unsafe-sysctls: vm.max_map_count=262144
     spec:
       containers:
       - image: gcr.io/po2r-193708/fts:6.1.2
